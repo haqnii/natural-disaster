@@ -59,7 +59,6 @@ jobs:
       matrix:
         arch:
         - arm64
-        - arm
         #bin: ["server", "inject"]
         #devkit: ["core", "gum", "gumjs"]
         os:
@@ -117,7 +116,7 @@ jobs:
         #for j in core gum; do make "${j}-${{ matrix.os }}-${{ matrix.arch }}"; done  # target
         #for j in core gum gumjs; do python releng/mkdevkit.py "frida-${j}" "${{ matrix.os }}-${{ matrix.arch }}" "build/devkits/${{ matrix.os }}/${{ matrix.arch }}/${j}"; done  # devkit
 
-        ./configure --prefix="${PWD}/build" --host="${{ matrix.os }}-${{ matrix.arch }}" --enable-frida-tools --enable-gadget --enable-server --enable-portal -- -Dfrida-gum:devkits=gum,gumjs -Dfrida-core:devkits=core
+        ./configure --prefix="${PWD}/build" --host="${{ matrix.os }}-${{ matrix.arch }}" --enable-gadget --enable-server --enable-portal -- -Dfrida-gum:devkits=gum,gumjs -Dfrida-core:devkits=core
         make
         popd
 
@@ -155,7 +154,7 @@ jobs:
         ${compr%:*} -k "${_src}"
         gh_release_put "${_src}.${compr#*:}" "${GITHUB_REPOSITORY##*/}-gadget-${FRIDA_VERSION}-${{ matrix.os }}-${{ matrix.arch }}.so.${compr#*:}"
 
-        #python subprojects/frida-core/src/anti-anti-frida.py "${_src}"
+        python subprojects/frida-core/src/anti-anti-frida.py "${_src}"
         rm "${_src}.${compr#*:}"; ${compr%:*} -k "${_src}"
         mv "${_src}.${compr#*:}" "../libgadget-${{ matrix.arch }}.so.${compr#*:}"
 

@@ -60,8 +60,6 @@ jobs:
         arch:
         - arm64
         - arm
-        - x86_64
-        - x86
         #bin: ["server", "inject"]
         #devkit: ["core", "gum", "gumjs"]
         os:

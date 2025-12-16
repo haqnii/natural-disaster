@@ -51,28 +51,6 @@ index 256b8d99..079945e8 100644
  }
  
  void
-diff --git a/lib/gadget/gadget.vala b/lib/gadget/gadget.vala
-index 1227833c..112091dd 100644
---- a/lib/gadget/gadget.vala
-+++ b/lib/gadget/gadget.vala
-@@ -650,7 +650,7 @@ namespace Frida.Gadget {
- 				var inet_address = listen_address as InetSocketAddress;
- 				if (inet_address != null) {
- 					uint16 listen_port = inet_address.get_port ();
--					Environment.set_thread_name ("frida-gadget-tcp-%u".printf (listen_port));
-+					Environment.set_thread_name ("${FRIDA_PREFIX}-gadget-tcp-%u".printf (listen_port));
- 					if (request != null) {
- 						request.set_value (listen_port);
- 					} else {
-@@ -661,7 +661,7 @@ namespace Frida.Gadget {
- 				} else {
- #if !WINDOWS
- 					var unix_address = (UnixSocketAddress) listen_address;
--					Environment.set_thread_name ("frida-gadget-unix");
-+					Environment.set_thread_name ("${FRIDA_PREFIX}-gadget-unix");
- 					if (request != null) {
- 						request.set_value (0);
- 					} else {
 diff --git a/src/agent-container.vala b/src/agent-container.vala
 index a8db6b29..8ea740fa 100644
 --- a/src/agent-container.vala

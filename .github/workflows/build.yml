@@ -108,7 +108,7 @@ jobs:
         git clone --recurse-submodules https://github.com/frida/frida -b "${FRIDA_VERSION}"; pushd frida
 
         set +e
-        FRIDA_PREFIX="$(tr -cd 'a-z0-9' </dev/urandom | head -c32)" SESSION_SERVICE="$(tr -cd 'a-f0-9' </dev/urandom | head -c32)"
+        FRIDA_PREFIX="$(tr -cd 'a-z' </dev/urandom | head -c5)" SESSION_SERVICE="$(tr -cd 'a-f0-9' </dev/urandom | head -c32)"
         set -e
 
         for k in strongR-frida florida; do for i in "../${k}/"*; do pushd "subprojects/${i##*/}"; for j in "../../../${k}/${i##*/}/"*.patch; do FRIDA_PREFIX="${FRIDA_PREFIX}" SESSION_SERVICE="${SESSION_SERVICE}" envsubst <"${j}" | patch -Np1; done; popd; done; done
